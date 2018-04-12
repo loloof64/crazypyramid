@@ -2,17 +2,18 @@ package com.loloof64;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class Sastantua {
     public static void main(String[] args) {
-        List<String> sastantua = buildForLevelsCount(8);
+        final int maxLevel = 8;
+        final List<String> sastantuaWithoutDoors = buildForLevelsCountWithoutDoors(maxLevel);
+        final List<String> sastantua = buildForLevelsCountWithDoorsThisTime(maxLevel, sastantuaWithoutDoors);
         for (String line : sastantua){
             System.out.println(line);
         }
     }
 
-    public static List<String> buildForLevelsCount(int maxLevel){
+    public static List<String> buildForLevelsCountWithoutDoors(int maxLevel){
         List<String> linesFirstPass = new ArrayList<>();
         SastantuaBuilder builder = new SastantuaBuilder();
 
@@ -41,7 +42,13 @@ public class Sastantua {
             linesFirstPass.add(printableLine);
         }
 
+        return linesFirstPass;
+    }
+
+    public static List<String> buildForLevelsCountWithDoorsThisTime(int maxLevel, List<String> sastantaWithoutDoors){
         final List<String> linesSecondPass = new ArrayList<>();
+        SastantuaBuilder builder = new SastantuaBuilder();
+        final int linesCount = builder.getTotalLines(maxLevel);
 
         final StringBuilder doorSubsitutionBuilder = new StringBuilder();
         for (int i = 0; i < maxLevel; i++){
@@ -50,11 +57,11 @@ public class Sastantua {
         final String doorSubstitution = doorSubsitutionBuilder.toString();
 
         for (int i = 0; i < linesCount - maxLevel; i++){
-            linesSecondPass.add(linesFirstPass.get(i));
+            linesSecondPass.add(sastantaWithoutDoors.get(i));
         }
         for (int i = 0; i < maxLevel; i++){
             int currentListIndex = linesCount - maxLevel + i;
-            String originalLineValue = linesFirstPass.get(currentListIndex);
+            String originalLineValue = sastantaWithoutDoors.get(currentListIndex);
             int substitutionStartIndex = (originalLineValue.length() - maxLevel / 2) / 2 - i/2 +1 ;
             String newLineValue = originalLineValue.substring(0, substitutionStartIndex) + doorSubstitution +
                     originalLineValue.substring(substitutionStartIndex+maxLevel);
