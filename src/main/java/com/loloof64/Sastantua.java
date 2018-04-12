@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class Sastantua {
     public static void main(String[] args) {
-        List<String> sastantua = buildForLevelsCount(8);
+        List<String> sastantua = buildForLevelsCount(5);
         for (String line : sastantua){
             System.out.println(line);
         }
@@ -55,7 +55,7 @@ public class Sastantua {
         for (int i = 0; i < maxLevel; i++){
             int currentListIndex = linesCount - maxLevel + i;
             String originalLineValue = linesFirstPass.get(currentListIndex);
-            int substitutionStartIndex = (originalLineValue.length() - maxLevel / 2) / 2 - i/2 +1 ;
+            int substitutionStartIndex = (originalLineValue.length() - maxLevel / 2) / 2 - i/2 + (i%2 == 0 ? 1 : 0);
             String newLineValue = originalLineValue.substring(0, substitutionStartIndex) + doorSubstitution +
                     originalLineValue.substring(substitutionStartIndex+maxLevel);
             linesSecondPass.add(newLineValue);
