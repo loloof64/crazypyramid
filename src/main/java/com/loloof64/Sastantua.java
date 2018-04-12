@@ -5,7 +5,11 @@ import java.util.List;
 
 public class Sastantua {
     public static void main(String[] args) {
-        List<String> sastantua = buildForLevelsCount(2);
+        printSastantuaForMaxLevelsCount(8);
+    }
+
+    public static void printSastantuaForMaxLevelsCount(int levels){
+        List<String> sastantua = buildForLevelsCount(levels);
         for (String line : sastantua){
             System.out.println(line);
         }
@@ -55,8 +59,8 @@ public class Sastantua {
             int currentListIndex = linesCount - maxLevel + i;
             String originalLineValue = linesFirstPass.get(currentListIndex);
             int substitutionStartIndex = (originalLineValue.length() - maxLevel / 2) / 2 - i/2;
-            if ((maxLevel-2) % 4 == 0){
-                substitutionStartIndex += (i % 2 == 0 ? 1 : 0);
+            if ((maxLevel-1) % 4 == 0 || (maxLevel - 2) % 4 == 0) {
+                substitutionStartIndex += (i%2 == 1 ? -1: 0);
             }
             String newLineValue = originalLineValue.substring(0, substitutionStartIndex) + doorSubstitution +
                     originalLineValue.substring(substitutionStartIndex+maxLevel);
